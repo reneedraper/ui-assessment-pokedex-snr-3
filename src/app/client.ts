@@ -8,7 +8,7 @@ import {
 export const client = new ApolloClient({
   link: ApolloLink.from([
     new HttpLink({
-      uri: 'https://graphql-pokemon2.vercel.app',
+      uri: 'https://graphql-pokeapi.vercel.app/api/graphql',
     }),
   ]),
   cache: new InMemoryCache({}),
