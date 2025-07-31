@@ -5,6 +5,9 @@ import gql from 'graphql-tag';
 export type Pokemon = {
   id: string;
   name: string;
+  // image: string;
+  // order: number;
+  // types: string[];
 };
 
 export type PokemonOption = {
@@ -17,6 +20,7 @@ export const GET_POKEMONS = gql`
     pokemons(first: $first) {
       id
       name
+
     }
   }
 `;

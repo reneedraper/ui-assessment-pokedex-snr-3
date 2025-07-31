@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useGetPokemons } from '../../hooks/useGetPokemons';
 
 export const PokemonList = () => {
   const classes = useStyles();
   const { pokemons, loading } = useGetPokemons();
+  const [isOpen, openModal] = useState(false);
 
   return (
-    <div className={classes.root}>
-      {loading && <div>Loading...</div>}
-      {pokemons.map((pkmn) => (
-        <div key={pkmn.id}>{pkmn.name}</div>
-      ))}
-    </div>
+    <section aria-labelledby="pokemon-heading" className={classes.root}>
+      <h2 id="pokemon-heading" >Pokémon List</h2>
+      {loading && <div role="status" aria-live="polite">Loading...</div>}
+      <ul className={classes.pokemonList}>
+        {pokemons.map((pkmn) => (
+          <li key={pkmn.id}>      
+          <button className={classes.pokemonItem} onClick={() => openModal(isOpen)}>
+            {pkmn.name}
+            </button>
+          </li>
+          
+        ))}
+      </ul>
+    </section>
   );
 };
 
@@ -20,10 +29,15 @@ const useStyles = createUseStyles(
   {
     root: {
       width: '100%',
-      textAlign: 'center',
       padding: '32px',
       boxSizing: 'border-box',
     },
+    pokemonList: { listStyleType: 'none' },
+    pokemonItem: { backgroundColor: 'transparent',
+      cursor: 'pointer',
+    },
+
   },
+
   { name: 'PokemonList' }
 );
