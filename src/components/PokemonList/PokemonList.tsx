@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useNavigate, useParams } from 'react-router-dom';
+import { client } from 'src/app/client';
 import { Pokemon, useGetPokemons } from '../../hooks/useGetPokemons';
+import { GET_POKEMON_DETAILS } from '../../hooks/useGetPokemonDetails'
 import { PokemonDetailsModal } from '../PokemonModal';
 import { SearchBar } from '../SearchBar';
+import { LoadingIndicator } from '../LoadingIndicator';
 
 export const PokemonList = () => {
   const classes = useStyles();
@@ -21,6 +24,21 @@ export const PokemonList = () => {
     navigate('/pokemon');
   };
 
+  const handlePrefetch = (name: string) => {
+    try {
+      client.readQuery({
+        query: GET_POKEMON_DETAILS,
+        variables: { name },
+      });
+      return;
+    } catch {
+      client.query({
+        query: GET_POKEMON_DETAILS,
+        variables: { name },
+      });
+    }
+  };
+
   const filteredPokemons = pokemons.filter((pokemon: Pokemon) =>
     pokemon.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
   );
@@ -28,9 +46,9 @@ export const PokemonList = () => {
 
   return (
     <section aria-labelledby="pokemon-heading" className={classes.root}>
-      <h2 data-testid="pokemon-heading" className={classes.header}>Pokémon List</h2>
+      <h2 data-testid="pokemon-heading" className={classes.whiteText}>Pokémon List</h2>
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
-      {loading && <div role="status" aria-live="polite">Loading...</div>}
+      {loading && <LoadingIndicator />}
       <ul className={classes.pokemonList}>
         {filteredPokemons.map((pokemon: Pokemon) => (
           <li className={classes.pokemonItem} key={pokemon.id}>
@@ -38,6 +56,8 @@ export const PokemonList = () => {
               data-testid="pokemon-button"
               className={classes.pokemonButton}
               onClick={() => handleOpen(pokemon.name)}
+              onMouseEnter={() => handlePrefetch(pokemon.name)}
+              onFocus={() => handlePrefetch(pokemon.name)}
               aria-haspopup="dialog"
               aria-controls={`dialog-${pokemon.name}`}
             >
@@ -67,7 +87,7 @@ const useStyles = createUseStyles(
       padding: '32px',
       boxSizing: 'border-box',
     },
-    header: { color: 'white' },
+    whiteText: { color: 'white' },
     pokemonList: {
       padding: '0',
       display: 'flex',
