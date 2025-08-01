@@ -10,23 +10,23 @@ export type PokemonDetails = {
   height: number
   held_items: [HeldItem]
   id: number
-  is_default: Boolean
-  location_area_encounters: String
+  is_default: boolean
+  location_area_encounters: string
   moves: [Move]
-  name: String
+  name: string
   order: number
   species: BaseName
   sprites: Sprite
   stats: [Stat]
   types: [Type]
   weight: number
-  status: Boolean
-  message: String
+  status: boolean
+  message: string
 }
 
 export type Ability = {
   ability: BaseName
-  is_hidden: Boolean
+  is_hidden: boolean
   slot: number
 }
 
@@ -57,14 +57,14 @@ export type Move ={
 }
 
 export type Sprite ={
-  back_default: String
-  back_female: String
-  back_shiny: String
-  back_shiny_female: String
-  front_default: String
-  front_female: String
-  front_shiny: String
-  front_shiny_female: String
+  back_default: string
+  back_female: string
+  back_shiny: string
+  back_shiny_female: string
+  front_default: string
+  front_female: string
+  front_shiny: string
+  front_shiny_female: string
 }
 
 export type Stat ={
@@ -80,8 +80,8 @@ export type Type= {
 
 export type BaseName={
   id: number
-  url: String
-  name: String
+  url: string
+  name: string
 }
 
 const GET_POKEMON_DETAILS = gql`
@@ -93,18 +93,8 @@ query getPokemonDetails($name: String!) {
     base_experience
     height
     weight
-    is_default
-    location_area_encounters
-    status
-    message
 
     species {
-      id
-      name
-      url
-    }
-
-    forms {
       id
       name
       url
@@ -120,71 +110,8 @@ query getPokemonDetails($name: String!) {
       slot
     }
 
-    game_indices {
-      game_index
-      version {
-        id
-        name
-        url
-      }
-    }
-
-    held_items {
-      item {
-        id
-        name
-        url
-      }
-      version_details {
-        rarity
-        version {
-          id
-          name
-          url
-        }
-      }
-    }
-
-    moves {
-      move {
-        id
-        name
-        url
-      }
-      version_group_details {
-        level_learned_at
-        move_learn_method {
-          id
-          name
-          url
-        }
-        version_group {
-          id
-          name
-          url
-        }
-      }
-    }
-
     sprites {
-      back_default
-      back_female
-      back_shiny
-      back_shiny_female
       front_default
-      front_female
-      front_shiny
-      front_shiny_female
-    }
-
-    stats {
-      base_stat
-      effort
-      stat {
-        id
-        name
-        url
-      }
     }
 
     types {
@@ -205,7 +132,7 @@ export const useGetPokemonDetails = (name: string) => {
     },
   });
 
-  const pokemonDetails: PokemonDetails[] = useMemo(() => data?.pokemon || [], [data]);
+  const pokemonDetails: PokemonDetails | null = useMemo(() => data?.pokemon || null, [data]);
 
   // const pokemonOptions: PokemonOption[] = useMemo(
   //   () => pokemons.map((p: Pokemon) => ({ value: p.id, label: p.name })),
