@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useGetPokemonDetails } from 'src/hooks/useGetPokemonDetails';
+import { Ability, Type, useGetPokemonDetails } from 'src/hooks/useGetPokemonDetails';
 
 interface Props {
   name: string;
@@ -29,7 +29,7 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
 
   if (error) {
     return (
-      <div role="dialog" aria-modal="true" className={classes.backdrop} onClick={onClose}>
+      <div data-testid="pokemon-modal" role="dialog" aria-modal="true" className={classes.backdrop} onClick={onClose}>
         <div
           className={classes.modal}
           ref={dialogRef}
@@ -76,7 +76,7 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
             <div>
               <p>Abilities:</p>
               <ul>
-                {pokemonDetails.abilities.map((a) => (
+                {pokemonDetails.abilities.map((a: Ability) => (
                   <li key={a.ability.name}>
                     {a.ability.name}
                     {a.is_hidden && <span style={{ fontStyle: 'italic', marginLeft: 4 }}>(Hidden)</span>}
@@ -88,7 +88,7 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
             <p>Weight: {pokemonDetails.weight}</p>
             <p>Base Experience: {pokemonDetails.base_experience}</p>
             <p>Types: <span>
-              {pokemonDetails.types.map((t) => (
+              {pokemonDetails.types.map((t: Type) => (
                 <span
                   key={t.type.name}
                   className={classes.typeBadge}

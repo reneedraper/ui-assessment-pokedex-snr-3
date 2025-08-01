@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetPokemons } from '../../hooks/useGetPokemons';
+import { Pokemon, useGetPokemons } from '../../hooks/useGetPokemons';
 import { PokemonDetailsModal } from '../PokemonModal';
 import { SearchBar } from '../SearchBar';
 
@@ -21,18 +21,18 @@ export const PokemonList = () => {
     navigate('/pokemon');
   };
 
-  const filteredPokemons = pokemons.filter((pokemon) =>
+  const filteredPokemons = pokemons.filter((pokemon: Pokemon) =>
     pokemon.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
   );
 
 
   return (
     <section aria-labelledby="pokemon-heading" className={classes.root}>
-      <h2 id="pokemon-heading" className={classes.header}>Pokémon List</h2>
+      <h2 data-testid="pokemon-heading" className={classes.header}>Pokémon List</h2>
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
       {loading && <div role="status" aria-live="polite">Loading...</div>}
       <ul className={classes.pokemonList}>
-        {filteredPokemons.map((pokemon) => (
+        {filteredPokemons.map((pokemon: Pokemon) => (
           <li className={classes.pokemonItem} key={pokemon.id}>
             <button
               data-testid="pokemon-button"
