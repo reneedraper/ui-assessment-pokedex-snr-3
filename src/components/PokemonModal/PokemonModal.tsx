@@ -29,7 +29,7 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
 
   if (error) {
     return (
-      <div data-testid="pokemon-modal" role="dialog" aria-modal="true" className={classes.backdrop} onClick={onClose}>
+      <div data-testid="pokemon-modal" role="dialog" aria-modal="true" id={`dialog-${name}`} className={classes.backdrop} onClick={onClose}>
         <div
           className={classes.modal}
           ref={dialogRef}
