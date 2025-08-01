@@ -1,3 +1,8 @@
+## Notes from Renée
+While I could occasionally connect here: https://graphql-pokemon2.vercel.app/ Most the time it was down, so I found another api to use (https://graphql-pokeapi.vercel.app/api/graphql). I didn't include the pokemon types in the list display because unlike the schema of https://graphql-pokemon2.vercel.app/, they're not included when calling bulk pokemon.
+
+The API I used is...pretty slow, but I figured for the purposes of the exercise, it would do.
+
 # UI Assessment - Pokédex (Senior)
 This is a small application that will leverage various frontend technologies to assess your aptitude. This is a take home assignment and can be done at your own pace. Your recruiter will communicate with you when you should turn this assessment in.
 
@@ -10,7 +15,10 @@ In this assessment you will utilize a Pokémon open API (GraphQL). This will hel
 
 Apollo Client Config - `src/app/client.ts`
 
+
 ---
+
+
 ### App-wide requirements
 1. Should use jss for all styling - no css files. `<PokemonList />` (`src/components/PokemonList/PokemonList.tsx`) already does this. Feel free to use this component as an example of how to implement jss. _All styling contexts are already provided and implemented for you_
 1. Must use TypeScript for all files
@@ -38,7 +46,7 @@ When a user wants to see more information about a Pokémon, they should be able 
 
 1. The dialog/modal will be route dependent meaning that whether or not it's shown and what Pokémon's details it's showing is based on the route. This should use `react-router`. React router is already set up in the app.
 1. What additional you display and how you display it is up to you.
-1. When the dialog/modal appears, a new data hook will be used to grab the details for a single Pokémon. This should be done using this graphql query
+1. When the dialog/modal appears, a new data hook will be used to grab the details for a single Pokémon. This should be done using this graphql query 
 ```gql
 query pokemon($id: String, $name: String){
   pokemon(id: $id, name: $name){
@@ -64,6 +72,7 @@ query pokemon($id: String, $name: String){
   }
 }
 ```
+
 
 ---
 

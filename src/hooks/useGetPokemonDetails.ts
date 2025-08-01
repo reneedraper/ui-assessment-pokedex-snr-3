@@ -84,30 +84,21 @@ export type BaseName={
   name: string
 }
 
-const GET_POKEMON_DETAILS = gql`
+export const GET_POKEMON_DETAILS = gql`
 query getPokemonDetails($name: String!) {
   pokemon(name: $name) {
     id
     name
-    order
     base_experience
     height
     weight
-
-    species {
-      id
-      name
-      url
-    }
 
     abilities {
       ability {
         id
         name
-        url
       }
       is_hidden
-      slot
     }
 
     sprites {
@@ -119,7 +110,6 @@ query getPokemonDetails($name: String!) {
       type {
         id
         name
-        url
       }
     }
   }
@@ -128,16 +118,12 @@ query getPokemonDetails($name: String!) {
 export const useGetPokemonDetails = (name: string) => {
   const { data, ...queryRes } = useQuery(GET_POKEMON_DETAILS, {
     variables: {
-      name
+      name,
+      fetchPolicy: 'cache-first',
     },
   });
 
   const pokemonDetails: PokemonDetails | null = useMemo(() => data?.pokemon || null, [data]);
-
-  // const pokemonOptions: PokemonOption[] = useMemo(
-  //   () => pokemons.map((p: Pokemon) => ({ value: p.id, label: p.name })),
-  //   [pokemons]
-  // );
 
   return {
     pokemonDetails,

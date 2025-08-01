@@ -47,6 +47,7 @@ export const useGetPokemons = () => {
     () => pokemons.map((p: Pokemon) => ({ value: p.id, label: p.name })),
     [pokemons]
   );
+  // Indented to use for dropdown or autocomplete maybe?
 
   return {
     pokemons,

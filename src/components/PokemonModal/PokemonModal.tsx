@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Ability, Type, useGetPokemonDetails } from 'src/hooks/useGetPokemonDetails';
+import { LoadingIndicator } from '../LoadingIndicator/LoadingIndicator';
 
 interface Props {
   name: string;
@@ -69,10 +70,11 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
           {name}
         </h2>
 
-        {loading && <p>Loading...</p>}
+        {loading && <LoadingIndicator />}
         {!loading && pokemonDetails && (
           <div className={classes.content}>
             <img src={pokemonDetails.sprites.front_default} alt={pokemonDetails.name} width={150} />
+            <p>Number: {pokemonDetails.id}</p>
             <div>
               <p>Abilities:</p>
               <ul>
