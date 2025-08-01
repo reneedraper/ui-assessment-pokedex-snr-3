@@ -50,6 +50,7 @@ const useStyles = createUseStyles(
     root: {
       zIndex: 100,
       background: '#131924',
+      color: 'white',
       position: 'fixed',
       left: 0,
       top: 0,

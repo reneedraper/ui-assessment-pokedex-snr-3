@@ -25,6 +25,7 @@ export const Home = () => {
 const useStyles = createUseStyles(
   {
     root: {
+      color: 'white',
       minWidth: '100%',
       minHeight: '100%',
       padding: '24px 20%',
@@ -45,6 +46,9 @@ const useStyles = createUseStyles(
       '& li': {
         marginTop: '12px',
       },
+      '& a': {
+        color: 'white',
+      }
     },
     '@media (min-width: 1024px)': {
       root: {

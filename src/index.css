@@ -2,11 +2,15 @@
 
 body {
   background: #171E2b;
-}
-
-* {
-  color: rgba(255,255,255,.92);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-family: 'Roboto';
+  scrollbar-width: thin;
+  scrollbar-color: #4B5066 #171E2b;
 }
 
 .material-icons {
@@ -14,33 +18,20 @@ body {
 }
 
 button {
-
   padding: 8px 12px;
   border: none;
   box-shadow: none;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
 ::-webkit-scrollbar {
   width: 16px;
 }
-body {
-  scrollbar-width: thin;
-  scrollbar-color: #4B5066 #171E2b;
-}
+
 ::-webkit-scrollbar-track {
   background: #171E2b;
 }

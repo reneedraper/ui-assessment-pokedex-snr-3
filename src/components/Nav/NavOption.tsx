@@ -37,6 +37,7 @@ const useStyles = createUseStyles(
       width: '100%',
       display: 'flex',
       alignItems: 'center',
+      color: 'white',
       boxSizing: 'border-box',
       height: '56px',
       textDecoration: 'none',
