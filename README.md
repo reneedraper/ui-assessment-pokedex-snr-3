@@ -5,8 +5,11 @@ Requirements for this can be found on the home page of the app or [here](./src/R
 ## To run:
 
 yarn install
+
 yarn run dev
 
-Or use docker
+Or use docker:
+
 docker build -t pokedex-app .
+
 docker run -p 8080:80 pokedex-app
