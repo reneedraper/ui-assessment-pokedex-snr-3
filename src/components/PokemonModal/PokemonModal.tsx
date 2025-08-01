@@ -27,7 +27,29 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
     };
   }, [onClose]);
 
-  if (!pokemonDetails) return null;
+  if (error) {
+    return (
+      <div role="dialog" aria-modal="true" className={classes.backdrop} onClick={onClose}>
+        <div
+          className={classes.modal}
+          ref={dialogRef}
+          tabIndex={-1}
+          onClick={(e) => e.stopPropagation()}
+          aria-labelledby="modal-title"
+        >
+          <h2 id="modal-title" className={classes.title}>Error</h2>
+          <p role="alert">Error: {error.message}</p>
+          <button
+            onClick={onClose}
+            className={classes.closeIconButton}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -43,12 +65,25 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
         onClick={(e) => e.stopPropagation()}
         aria-labelledby="modal-title"
       >
-        <h2 id="modal-title" className={classes.title}>{pokemonDetails.name}</h2>
+        <h2 id="modal-title" className={classes.title}>
+          {name}
+        </h2>
+
         {loading && <p>Loading...</p>}
-        {error && <p role="alert">Error: {error.message}</p>}
-        {!loading && !error && (
+        {!loading && pokemonDetails && (
           <div className={classes.content}>
             <img src={pokemonDetails.sprites.front_default} alt={pokemonDetails.name} width={150} />
+            <div>
+              <p>Abilities:</p>
+              <ul>
+                {pokemonDetails.abilities.map((a) => (
+                  <li key={a.ability.name}>
+                    {a.ability.name}
+                    {a.is_hidden && <span style={{ fontStyle: 'italic', marginLeft: 4 }}>(Hidden)</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
             <p>Height: {pokemonDetails.height}</p>
             <p>Weight: {pokemonDetails.weight}</p>
             <p>Base Experience: {pokemonDetails.base_experience}</p>
@@ -62,7 +97,7 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
                   {t.type.name}
                 </span>
               ))}
-              </span>
+            </span>
             </p>
           </div>
         )}
@@ -97,7 +132,7 @@ const useStyles = createUseStyles({
     width: '90%',
     outline: 'none',
   },
-  title: {textTransform: 'capitalize'},
+  title: { textTransform: 'capitalize' },
   typeBadge: {
     display: 'inline-block',
     color: '#fff',
@@ -161,5 +196,5 @@ const typeColors: Record<string, string> = {
   steel: '#B7B7CE',
   fairy: '#D685AD',
   stellar: '#69CDFC',
-  '???': '#68A090', 
+  '???': '#68A090',
 };
