@@ -6,6 +6,10 @@ import React, {
   useState,
 } from 'react';
 
+interface Props {
+  children: React.ReactNode;
+}
+
 type Layout = { navCollapsed: boolean };
 
 type LayoutContextValue = {
@@ -18,7 +22,7 @@ const LayoutContext = createContext<LayoutContextValue>({
   setLayout: () => null,
 });
 
-export const LayoutProvider: React.FC = ({ children }) => {
+export const LayoutProvider: React.FC<Props> = ({ children }) => {
   const [layout, setLayout] = useState({
     navCollapsed: true,
   });
