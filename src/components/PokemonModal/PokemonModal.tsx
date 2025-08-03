@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Ability, Type, useGetPokemonDetails } from 'src/hooks/useGetPokemonDetails';
+import { Ability, useGetPokemonDetails } from 'src/hooks/useGetPokemonDetails';
 import { LoadingIndicator } from '../LoadingIndicator/LoadingIndicator';
+import { PokemonTypeBadge } from '../PokemonTypeBadge/PokemonTypeBadge';
 
 interface Props {
   name: string;
@@ -89,17 +90,8 @@ export const PokemonDetailsModal: React.FC<Props> = ({ name, onClose }) => {
             <p>Height: {pokemonDetails.height}</p>
             <p>Weight: {pokemonDetails.weight}</p>
             <p>Base Experience: {pokemonDetails.base_experience}</p>
-            <p>Types: <span>
-              {pokemonDetails.types.map((t: Type) => (
-                <span
-                  key={t.type.name}
-                  className={classes.typeBadge}
-                  style={{ backgroundColor: typeColors[t.type.name.toLowerCase()] || '#aaa' }}
-                >
-                  {t.type.name}
-                </span>
-              ))}
-            </span>
+            <p className={classes.flex}>
+              Types: <PokemonTypeBadge types={pokemonDetails.types} />
             </p>
           </div>
         )}
@@ -135,16 +127,6 @@ const useStyles = createUseStyles({
     outline: 'none',
   },
   title: { textTransform: 'capitalize' },
-  typeBadge: {
-    display: 'inline-block',
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 600,
-    padding: '4px 8px',
-    margin: '0 4px 4px 0',
-    borderRadius: 4,
-    textTransform: 'capitalize',
-  },
   closeIconButton: {
     position: 'absolute',
     top: 12,
@@ -170,6 +152,10 @@ const useStyles = createUseStyles({
     color: 'black',
     marginTop: 12,
   },
+  flex: {
+    display: 'flex',
+    gap: '.25rem',
+  },
   closeButton: {
     color: 'black',
     marginTop: 16,
@@ -178,25 +164,3 @@ const useStyles = createUseStyles({
   },
 });
 
-const typeColors: Record<string, string> = {
-  normal: '#A8A77A',
-  fire: '#EE8130',
-  water: '#6390F0',
-  electric: '#F7D02C',
-  grass: '#7AC74C',
-  ice: '#96D9D6',
-  fighting: '#C22E28',
-  poison: '#A33EA1',
-  ground: '#E2BF65',
-  flying: '#A98FF3',
-  psychic: '#F95587',
-  bug: '#A6B91A',
-  rock: '#B6A136',
-  ghost: '#735797',
-  dragon: '#6F35FC',
-  dark: '#705746',
-  steel: '#B7B7CE',
-  fairy: '#D685AD',
-  stellar: '#69CDFC',
-  '???': '#68A090',
-};

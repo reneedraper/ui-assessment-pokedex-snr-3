@@ -9,6 +9,7 @@ import { PokemonDetailsModal } from '../PokemonModal';
 import { SearchBar } from '../SearchBar';
 import { LoadingIndicator } from '../LoadingIndicator';
 import { PokemonDetails, GET_POKEMON_DETAILS } from 'src/hooks/useGetPokemonDetails';
+import { PokemonTypeBadge } from '../PokemonTypeBadge/PokemonTypeBadge';
 
 export const PokemonList = () => {
   const classes = useStyles();
@@ -37,6 +38,8 @@ export const PokemonList = () => {
       return null;
     }
   };
+  //TODO: this still need improvement, need to review more. Memoize? Also the getpokemondetails uses needs refactoring with new prefetch
+
   const filteredPokemons = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
   );
@@ -49,7 +52,7 @@ export const PokemonList = () => {
       {loading && <LoadingIndicator />}
       <ul className={classes.pokemonList}>
         {filteredPokemons.map((pokemon: Pokemon) => {
-          const details: PokemonDetails = getCachedDetails(pokemon.name);
+          const pokemonDetails: PokemonDetails = getCachedDetails(pokemon.name);
 
           return (
 
@@ -66,9 +69,7 @@ export const PokemonList = () => {
                   <span>#{pokemon.id}</span>
                   <span className={classes.pokemonName}>{pokemon.name}
                   </span>
-                  <span>
-                    Type: {details?.types.map(t => t.type.name).join(', ')}
-                  </span>
+                  <PokemonTypeBadge types={pokemonDetails?.types} />
                 </div>
               </button>
 
