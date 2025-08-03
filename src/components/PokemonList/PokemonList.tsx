@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { client } from 'src/app/client';
+
 import { Pokemon, useGetPokemons } from '../../hooks/useGetPokemons';
-import { GET_POKEMON_DETAILS } from '../../hooks/useGetPokemonDetails'
+import { usePrefetchPokemonDetails } from 'src/hooks/usePrefetchPokemonDetails';
 import { PokemonDetailsModal } from '../PokemonModal';
 import { SearchBar } from '../SearchBar';
 import { LoadingIndicator } from '../LoadingIndicator';
+import { PokemonDetails, GET_POKEMON_DETAILS } from 'src/hooks/useGetPokemonDetails';
 
 export const PokemonList = () => {
   const classes = useStyles();
@@ -15,7 +17,7 @@ export const PokemonList = () => {
   const { name: selectedPokemonName } = useParams();
 
   const [searchTerm, setSearchTerm] = useState('');
-
+  usePrefetchPokemonDetails();
   const handleOpen = (name: string) => {
     navigate(`/pokemon/${name}`);
   };
@@ -24,22 +26,18 @@ export const PokemonList = () => {
     navigate('/pokemon');
   };
 
-  const handlePrefetch = (name: string) => {
+  const getCachedDetails = (name: string) => {
     try {
-      client.readQuery({
+      const { pokemon } = client.readQuery({
         query: GET_POKEMON_DETAILS,
         variables: { name },
       });
-      return;
+      return pokemon;
     } catch {
-      client.query({
-        query: GET_POKEMON_DETAILS,
-        variables: { name },
-      });
+      return null;
     }
   };
-
-  const filteredPokemons = pokemons.filter((pokemon: Pokemon) =>
+  const filteredPokemons = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
   );
 
@@ -50,27 +48,33 @@ export const PokemonList = () => {
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
       {loading && <LoadingIndicator />}
       <ul className={classes.pokemonList}>
-        {filteredPokemons.map((pokemon: Pokemon) => (
-          <li className={classes.pokemonItem} key={pokemon.id}>
-            <button
-              data-testid="pokemon-button"
-              className={classes.pokemonButton}
-              onClick={() => handleOpen(pokemon.name)}
-              onMouseEnter={() => handlePrefetch(pokemon.name)}
-              onFocus={() => handlePrefetch(pokemon.name)}
-              aria-haspopup="dialog"
-              aria-controls={`dialog-${pokemon.name}`}
-            >
-              <img className={classes.pokemonImage} src={pokemon.image} alt={pokemon.name} width={150} />
-              <div className={classes.pokemonItemSummary}>
-                <span>#{pokemon.id}</span>
-                <span className={classes.pokemonName}>{pokemon.name}
-                </span>
-                </div>
-            </button>
+        {filteredPokemons.map((pokemon: Pokemon) => {
+          const details: PokemonDetails = getCachedDetails(pokemon.name);
 
-          </li>
-        ))}
+          return (
+
+            <li className={classes.pokemonItem} key={pokemon.id}>
+              <button
+                data-testid="pokemon-button"
+                className={classes.pokemonButton}
+                onClick={() => handleOpen(pokemon.name)}
+                aria-haspopup="dialog"
+                aria-controls={`dialog-${pokemon.name}`}
+              >
+                <img className={classes.pokemonImage} src={pokemon.image} alt={pokemon.name} width={150} />
+                <div className={classes.pokemonItemSummary}>
+                  <span>#{pokemon.id}</span>
+                  <span className={classes.pokemonName}>{pokemon.name}
+                  </span>
+                  <span>
+                    Type: {details?.types.map(t => t.type.name).join(', ')}
+                  </span>
+                </div>
+              </button>
+
+            </li>
+          );
+        })}
       </ul>
 
       {selectedPokemonName && (
