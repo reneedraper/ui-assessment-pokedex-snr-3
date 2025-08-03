@@ -9,6 +9,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Roboto';
+  font-size: 16px;
   scrollbar-width: thin;
   scrollbar-color: #4B5066 #171E2b;
 }
