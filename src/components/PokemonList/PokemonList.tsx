@@ -38,7 +38,7 @@ export const PokemonList = () => {
       return null;
     }
   };
-  //TODO: this still need improvement, need to review more. Memoize? Also the getpokemondetails uses needs refactoring with new prefetch
+  //TODO: this still need improvement, need to review more. Memoize? 
 
   const filteredPokemons = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchTerm.trim().toLowerCase())

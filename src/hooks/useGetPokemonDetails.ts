@@ -3,86 +3,36 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 export type PokemonDetails = {
-  abilities: [Ability]
-  base_experience: number
-  forms: [BaseName]
-  game_indices: [GameIndex]
-  height: number
-  held_items: [HeldItem]
-  id: number
-  is_default: boolean
-  location_area_encounters: string
-  moves: [Move]
-  name: string
-  order: number
-  species: BaseName
-  sprites: Sprite
-  stats: [Stat]
-  types: [Type]
-  weight: number
-  status: boolean
-  message: string
-}
+  id: number;
+  name: string;
+  base_experience: number;
+  height: number;
+  weight: number;
+  stats: {
+    base_stat: number;
+    effort: number;
+    stat: {
+      name: string;
+    };
+  }[];
 
-export type Ability = {
-  ability: BaseName
-  is_hidden: boolean
-  slot: number
-}
-
-export type GameIndex ={
-  game_index: number
-  version: BaseName
-}
-
-export type VersionDetail ={
-  rarity: number
-  version: BaseName
-}
-
-export type HeldItem ={
-  item: BaseName
-  version_details: [VersionDetail]
-}
-
-export type VersionGroupDetail ={
-  level_learned_at: number
-  move_learn_method: BaseName
-  version_group: BaseName
-}
-
-export type Move ={
-  move: BaseName
-  version_group_details: [VersionGroupDetail]
-}
-
-export type Sprite ={
-  back_default: string
-  back_female: string
-  back_shiny: string
-  back_shiny_female: string
-  front_default: string
-  front_female: string
-  front_shiny: string
-  front_shiny_female: string
-}
-
-export type Stat ={
-  base_stat: number
-  effort: number
-  stat: BaseName
-}
-
-export type Type= {
-  slot: number
-  type: BaseName
-}
-
-export type BaseName={
-  id: number
-  url: string
-  name: string
-}
+  abilities: {
+    ability: {
+      id: number;
+      name: string;
+    };
+    is_hidden: boolean;
+  }[];
+  sprites: {
+    front_default: string;
+  };
+  types: {
+    type: {
+      id: number;
+      name: string;
+    };
+  }[];
+};
 
 export const GET_POKEMON_DETAILS = gql`
 query getPokemonDetails($name: String!) {
@@ -92,6 +42,14 @@ query getPokemonDetails($name: String!) {
     base_experience
     height
     weight
+
+    stats {
+      base_stat
+      effort
+      stat {
+        name
+      }
+    }
 
     abilities {
       ability {
@@ -106,7 +64,6 @@ query getPokemonDetails($name: String!) {
     }
 
     types {
-      slot
       type {
         id
         name

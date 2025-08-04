@@ -36,7 +36,7 @@ export const GET_POKEMONS = gql`
 export const useGetPokemons = () => {
   const { data, ...queryRes } = useQuery(GET_POKEMONS, {
     variables: {
-      limit: 151, // change to 151 when done testing, or do pagination or smth
+      limit: 151, // keep hardcoded from instructions
       offset: 0
     },
   });

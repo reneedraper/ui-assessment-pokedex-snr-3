@@ -1,8 +1,13 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { Type } from 'src/hooks/useGetPokemonDetails';
+// import { Type } from 'src/hooks/useGetPokemonDetails';
 
-
+type Type = {
+  type: {
+    id: number;
+    name: string;
+  };
+}
 interface Props {
   typeName?: string;
   types?: Type[];
@@ -15,7 +20,7 @@ export const PokemonTypeBadge: React.FC<Props> = ({ typeName, types }) => {
     return (
       <>
         <span className={classes.badgeWrapper}>
-          {types.map((t: Type) => (
+          {types.map((t) => (
             <PokemonTypeBadge key={t.type.name} typeName={t.type.name} />
           ))}
         </span>
