@@ -9,8 +9,8 @@ export default defineConfig({
   assetsInclude: ['**/*.md'],
   server: {
     // this ensures that the browser opens upon server start
-    open: false,
+    open: true,
     // this sets a default port to 3000
-    port: 3001,
+    port: 3000,
   },
 });
