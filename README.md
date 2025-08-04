@@ -8,6 +8,8 @@ While I could occasionally connect here: https://graphql-pokemon2.vercel.app/ Mo
 
 ## To run:
 
+use node 20.19.0 or higher.
+
 yarn install
 
 yarn run dev
